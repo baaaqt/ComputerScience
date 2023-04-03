@@ -8,7 +8,7 @@ int bmSearch(const char *str, const char *substr)
     n = strlen(str);
     m = strlen(substr);
 
-    if(m > n)
+    if (m > n)
         return -1;
 
     int tab[256];
@@ -16,35 +16,36 @@ int bmSearch(const char *str, const char *substr)
         tab[i] = m;
 
     for (int i = 0; i < m - 1; i++)
-        tab[(unsigned char) substr[i]] = m - 1 - i;
-    
+        tab[(unsigned int)substr[i]] = m - 1 - i;
+
     int i = m - 1;
     while (i < n)
     {
         int k = i, j = m - 1;
-        while(str[k] == substr[j] && j >= 0)
-        {    
+        while (str[k] == substr[j] && j >= 0)
+        {
             k--;
             j--;
         }
         if (j < 0)
             return k + 1;
-        i += tab[(unsigned char)str[i]];
+        i += tab[(unsigned int)str[i]];
     }
 
     return -1;
 }
 
-void show(const char * str, const char * substr, const int pos) {
+void show(const char *str, const char *substr, const int pos)
+{
     printf("%s\n", str);
-    for(int i = 0; i < pos; i++)
+    for (size_t i = 0; i < pos; i++)
         printf(" ");
     printf("%s\n", substr);
 }
 
 int main()
 {
-    char str[500]; 
+    char str[500];
     printf("Input string: ");
     scanf("%[^\n]%*c", &str);
 
@@ -52,6 +53,10 @@ int main()
     printf("Input substring: ");
     scanf("%[^\n]%*c", &substr);
 
-    show(str, substr, bmSearch(str, substr));
+    int pos = bmSearch(str, substr);
+    if (pos < 0)
+        printf("Not found.\n");
+    else
+        show(str, substr, pos);
     return 0;
 }
