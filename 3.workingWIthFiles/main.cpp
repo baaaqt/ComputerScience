@@ -28,8 +28,6 @@ void sortSymbols(
     const char * lettersFileName, 
     const char * digitsFileName
 )
-
-
 {
     FILE * mainfile = fopen(mainFileName, "r");
     FILE * letters = fopen(lettersFileName, "w");
