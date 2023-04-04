@@ -71,7 +71,7 @@ void printArray(const int *arr, const size_t size)
 
 int *copyArray(int *arr, const size_t size)
 {
-    int *arrCopy = new int[(int)size];
+    int *arrCopy = (int *) malloc(sizeof(int) * size);
     for (int i = 0; i < size; i++)
         arrCopy[i] = arr[i];
     return arrCopy;
@@ -79,8 +79,8 @@ int *copyArray(int *arr, const size_t size)
 
 int main()
 {
-    int n = 5000;
-    int *arr = new int[n];
+    int n = 25000;
+    int *arr = (int *) malloc(sizeof(int) *n);
     for (int i = 0; i < 20; i++)
     {
         fullRandomNums(arr, n);
@@ -94,10 +94,10 @@ int main()
         double shakerSortTime = shakerSort(arrCopy, n);
 
         printf("Shaker sort:\ntime - %lf,\nSorted: %d\n\n", shakerSortTime, isIncreasingArray(arrCopy, n));
-        delete[] arrCopy;
+        free(arrCopy);
     }
 
-    delete[] arr;
+    free(arr);
 
     return 0;
 }

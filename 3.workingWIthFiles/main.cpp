@@ -9,13 +9,13 @@ void checkFileOpening(FILE * file) {
     }
 }
 
-void randomTextFile(const char * filename, const unsigned int length) {
+void randomTextFile(const char * filename, const size_t length) {
     FILE * file = fopen(filename, "w");
     checkFileOpening(file);
 
     char symbols[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    for(int i = 0; i < length; i++) {
+    for(size_t i = 0; i < length; i++) {
         char c = symbols[rand() % 62];
         fprintf(file, "%c", c);
     }
@@ -55,14 +55,14 @@ void sortSymbols(
 
 int main() {
     randomTextFile(
-        "/home/baaaqt/Programming/CPPProjects/ComputerScience/3.workingWIthFiles/mainfile.txt", 
-        1000
+        "mainfile.txt", 
+        100000
     );
     
     sortSymbols(
-        "/home/baaaqt/Programming/CPPProjects/ComputerScience/3.workingWIthFiles/mainfile.txt", 
-        "/home/baaaqt/Programming/CPPProjects/ComputerScience/3.workingWIthFiles/letters.txt", 
-        "/home/baaaqt/Programming/CPPProjects/ComputerScience/3.workingWIthFiles/digits.txt"
+        "mainfile.txt", 
+        "letters.txt", 
+        "digits.txt"
     );
     
     

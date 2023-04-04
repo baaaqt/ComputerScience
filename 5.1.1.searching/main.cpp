@@ -3,7 +3,7 @@
 #include <time.h>
 #include <algorithm>
 
-void fullIncreasingNums(int *arr, const size_t size, const int left = -100, const int right = 100)
+void fillIncreasingNums(int *arr, const size_t size, const int left = -100, const int right = 100)
 {
     for (int i = 0; i < size; i++)
     {
@@ -22,7 +22,7 @@ void printArray(const int *arr, const size_t size)
     printf("%d]", arr[size - 1]);
 }
 
-int binarySearch(const int *arr, const size_t size, const int k)
+int binarySearch(const int *arr, const size_t size, const int key)
 {
     unsigned int left = 0;
     unsigned int right = size - 1;
@@ -30,9 +30,9 @@ int binarySearch(const int *arr, const size_t size, const int k)
     {
         int index = (left + right) / 2;
 
-        if (arr[index] < k)
+        if (arr[index] < key)
             left++;
-        else if (arr[index] > k)
+        else if (arr[index] > key)
             right--;
         else
             return index;
@@ -47,15 +47,16 @@ int main()
     int n;
     printf("Input n: ");
     scanf("%d", &n);
-    int *arr = new int[n];
-    fullIncreasingNums(arr, n);
+    int *arr = (int *) malloc(sizeof(int) * n);
+    fillIncreasingNums(arr, n);
     printArray(arr, n);
     
-    int k;
+    int key;
     printf("\nInput k: ");
-    scanf("%d", &k);
+    scanf("%d", &key);
     
-    printf("\n%d\n", binarySearch(arr, n, k));
-    delete[] arr;
+    printf("Index = %d\n", binarySearch(arr, n, key));
+    
+    free(arr);
     return 0;
 }

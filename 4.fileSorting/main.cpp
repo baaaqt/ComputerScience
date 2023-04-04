@@ -50,7 +50,7 @@ void randomNumsFile(const char *filename, const int count, const int left = -100
     for (int i = 0; i < count; i++)
     {
         int num = rand() % (right - left + 1) + left;
-        fprintf(file, "%d\n", num);
+        fprintf(file, "%d ", num);
     }
     fclose(file);
 }
@@ -60,22 +60,22 @@ void split(const char *mainFileName, const char *fileNameA, const char *fileName
     FILE *file = fopen(mainFileName, "r");
     checkFileOpening(file);
 
-    FILE **G = new FILE *[2];
-    G[0] = fopen(fileNameA, "w");
-    G[1] = fopen(fileNameB, "w");
-    checkFileOpening(G[0]);
-    checkFileOpening(G[1]);
+    FILE **g = (FILE **) malloc(sizeof(FILE *) * 2);
+    g[0] = fopen(fileNameA, "w");
+    g[1] = fopen(fileNameB, "w");
+    checkFileOpening(g[0]);
+    checkFileOpening(g[1]);
 
     int n = 0, x1, x2;
     fscanf(file, "%d", &x1);
     while (!feof(file))
     {
-        fprintf(G[n], "%d\n", x1);
+        fprintf(g[n], "%d ", x1);
         fscanf(file, "%d", &x2);
         while (!feof(file) && x1 <= x2)
         {
             x1 = x2;
-            fprintf(G[n], "%d\n", x1);
+            fprintf(g[n], "%d ", x1);
             fscanf(file, "%d", &x2);
         }
         x1 = x2;
@@ -83,9 +83,9 @@ void split(const char *mainFileName, const char *fileNameA, const char *fileName
     }
 
     fclose(file);
-    fclose(G[0]);
-    fclose(G[1]);
-    delete[] G;
+    fclose(g[0]);
+    fclose(g[1]);
+    free(g);
 }
 
 void merge(const char *mainFileName, const char *fileNameA, const char *fileNameB)
@@ -93,7 +93,7 @@ void merge(const char *mainFileName, const char *fileNameA, const char *fileName
     FILE *file = fopen(mainFileName, "w");
     checkFileOpening(file);
 
-    FILE **g = new FILE *[2];
+    FILE **g = (FILE **) malloc(sizeof(FILE *) * 2);
     g[0] = fopen(fileNameA, "r");
     g[1] = fopen(fileNameB, "r");
     checkFileOpening(g[0]);
@@ -110,19 +110,19 @@ void merge(const char *mainFileName, const char *fileNameA, const char *fileName
         else
             n = 1;
 
-        fprintf(file, "%d\n", x[n]);
+        fprintf(file, "%d ", x[n]);
 
         fscanf(g[n], "%d", &y[n]);
         if (!feof(g[n]) && x[n] <= y[n])
             x[n] = y[n];
         else
         {
-            fprintf(file, "%d\n", x[1 - n]);
+            fprintf(file, "%d ", x[1 - n]);
             fscanf(g[1 - n], "%d", &y[1 - n]);
             while (!feof(g[1 - n]) && x[1 - n] <= y[1 - n])
             {
                 x[1 - n] = y[1 - n];
-                fprintf(file, "%d\n", x[1 - n]);
+                fprintf(file, "%d ", x[1 - n]);
                 fscanf(g[1 - n], "%d", &y[1 - n]);
             }
             x[0] = y[0];
@@ -131,13 +131,13 @@ void merge(const char *mainFileName, const char *fileNameA, const char *fileName
     }
     while (!feof(g[0]))
     {
-        fprintf(file, "%d\n", x[0]);
+        fprintf(file, "%d ", x[0]);
         fscanf(g[0], "%d", &y[0]);
         x[0] = y[0];
     }
     while (!feof(g[1]))
     {
-        fprintf(file, "%d\n", x[1]);
+        fprintf(file, "%d ", x[1]);
         fscanf(g[1], "%d", &y[1]);
         x[1] = y[1];
     }
@@ -145,13 +145,13 @@ void merge(const char *mainFileName, const char *fileNameA, const char *fileName
     fclose(file);
     fclose(g[0]);
     fclose(g[1]);
-    delete[] g;
+    free(g);
 }
 
 void sortFile(const char *mainFileName)
 {
-    const char fileNameA[] = "/home/baaaqt/Programming/CPPProjects/ComputerScience/4.fileSorting/A.txt";
-    const char fileNameB[] = "/home/baaaqt/Programming/CPPProjects/ComputerScience/4.fileSorting/B.txt";
+    const char fileNameA[] = "A.txt";
+    const char fileNameB[] = "B.txt";
     split(mainFileName, fileNameA, fileNameB);
 
     while (!isEmptyFile(fileNameB))
@@ -174,16 +174,18 @@ void sortFile(const char *mainFileName)
 int main()
 {
     srand(time(0));
-    const char fileName[] = "/home/baaaqt/Programming/CPPProjects/ComputerScience/4.fileSorting/mainfile.txt";
-    randomNumsFile(fileName, 1000000);
+    const char fileName[] = "mainfile.txt";
+    randomNumsFile(fileName, 1000);
 
-    // printf("Before:\n");
-    // printFileContent(fileName);
+    printf("Before:\n");
+    printFileContent(fileName);
+    printf("\n\n");
 
     sortFile(fileName);
 
-    // printf("After:\n");
-    // printFileContent(fileName);
+    printf("After:\n");
+    printFileContent(fileName);
+    printf("\n");
 
     return 0;
 }
