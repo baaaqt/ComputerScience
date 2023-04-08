@@ -9,6 +9,16 @@ void checkFileOpening(FILE * file) {
     }
 }
 
+void printFileContent(const char * filename) {
+    FILE * file = fopen(filename, "r");
+    checkFileOpening(file);
+    char c;
+    while(fscanf(file, "%c", &c) != EOF) {
+        printf("%c", c);
+    }
+    fclose(file);
+}
+
 void randomTextFile(const char * filename, const size_t length) {
     FILE * file = fopen(filename, "w");
     checkFileOpening(file);
@@ -53,16 +63,28 @@ void sortSymbols(
 
 int main() {
     randomTextFile(
-        "mainfile.txt", 
-        100000
+        "files\\mainfile.txt", 
+        100
     );
     
     sortSymbols(
-        "mainfile.txt", 
-        "letters.txt", 
-        "digits.txt"
+        "files\\mainfile.txt", 
+        "files\\letters.txt", 
+        "files\\digits.txt"
     );
     
+    printf("Main:\n");
+    printFileContent("files\\mainfile.txt");
+    printf("\n");
+    printf("digits:\n");
+    printFileContent("files\\digits.txt");
+    printf("\n");
+
+    printf("letters:\n");
+    printFileContent("files\\letters.txt");
+    printf("\n");
+
+
     
     return 0;
 }

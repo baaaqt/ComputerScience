@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <time.h>
 
-void fullRandomNums(int *arr, const size_t size, const int left = -100, const int right = 100)
+void fillRandomNums(int *arr, const size_t size, const int left = -100, const int right = 100)
 {
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         arr[i] = rand() % (right - left + 1) + left;
     }
@@ -13,7 +13,7 @@ void fullRandomNums(int *arr, const size_t size, const int left = -100, const in
 
 bool isIncreasingArray(const int *arr, const size_t size)
 {
-    for (int i = 0; i < size - 1; i++)
+    for (size_t i = 0; i < size - 1; i++)
     {
         if (arr[i] > arr[i + 1])
             return false;
@@ -24,9 +24,9 @@ bool isIncreasingArray(const int *arr, const size_t size)
 double bubbleSort(int *arr, const size_t size)
 {
     clock_t start = clock();
-    for (int border = size; border > 0; border--)
+    for (size_t border = size; border > 0; border--)
     {
-        for (int i = 0; i < border - 1; i++)
+        for (size_t i = 0; i < border - 1; i++)
         {
             if (arr[i] > arr[i + 1])
                 std::swap(arr[i], arr[i + 1]);
@@ -39,16 +39,16 @@ double bubbleSort(int *arr, const size_t size)
 double shakerSort(int *arr, const size_t size)
 {
     clock_t start = clock();
-    int left = 0, right = size - 1;
+    size_t left = 0, right = size - 1;
     while (left < right)
     {
-        for (int i = left; i < right; i++)
+        for (size_t i = left; i < right; i++)
         {
             if (arr[i] > arr[i + 1])
                 std::swap(arr[i], arr[i + 1]);
         }
         right--;
-        for (int i = right; left < i; i--)
+        for (size_t i = right; left < i; i--)
         {
             if (arr[i] < arr[i - 1])
                 std::swap(arr[i], arr[i - 1]);
@@ -59,10 +59,11 @@ double shakerSort(int *arr, const size_t size)
     return (double)(end - start) / ((clock_t)1000);
 }
 
+
 void printArray(const int *arr, const size_t size)
 {
     printf("[");
-    for (int i = 0; i < size - 1; i++)
+    for (size_t i = 0; i < size - 1; i++)
     {
         printf("%d, ", arr[i]);
     }
@@ -72,7 +73,7 @@ void printArray(const int *arr, const size_t size)
 int *copyArray(int *arr, const size_t size)
 {
     int *arrCopy = (int *) malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
         arrCopy[i] = arr[i];
     return arrCopy;
 }
@@ -83,7 +84,7 @@ int main()
     int *arr = (int *) malloc(sizeof(int) *n);
     for (int i = 0; i < 20; i++)
     {
-        fullRandomNums(arr, n);
+        fillRandomNums(arr, n);
 
         int *arrCopy = copyArray(arr, n);
         double bubbleSortTime = bubbleSort(arrCopy, n);

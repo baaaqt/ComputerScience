@@ -86,6 +86,13 @@ void split(const char *mainFileName, const char *fileNameA, const char *fileName
     fclose(g[0]);
     fclose(g[1]);
     free(g);
+    printf("Split:\n");
+    printf("fileA:\n");
+    printFileContent(fileNameA);
+    printf("\n");
+    printf("FileB:\n");
+    printFileContent(fileNameB);
+    printf("\n");
 }
 
 void merge(const char *mainFileName, const char *fileNameA, const char *fileNameB)
@@ -132,20 +139,22 @@ void merge(const char *mainFileName, const char *fileNameA, const char *fileName
     while (!feof(g[0]))
     {
         fprintf(file, "%d ", x[0]);
-        fscanf(g[0], "%d", &y[0]);
-        x[0] = y[0];
+        fscanf(g[0], "%d", &x[0]);
     }
     while (!feof(g[1]))
     {
         fprintf(file, "%d ", x[1]);
-        fscanf(g[1], "%d", &y[1]);
-        x[1] = y[1];
+        fscanf(g[1], "%d", &x[1]);
     }
 
     fclose(file);
     fclose(g[0]);
     fclose(g[1]);
     free(g);
+    printf("Merge\n");
+    printf("mainfile:\n");
+    printFileContent(mainFileName);
+    printf("\n");
 }
 
 void sortFile(const char *mainFileName)
@@ -175,17 +184,19 @@ int main()
 {
     srand(time(0));
     const char fileName[] = "mainfile.txt";
-    randomNumsFile(fileName, 1000);
-
-    printf("Before:\n");
-    printFileContent(fileName);
-    printf("\n\n");
-
-    sortFile(fileName);
-
-    printf("After:\n");
+    // randomNumsFile(fileName, 7);
     printFileContent(fileName);
     printf("\n");
 
+    // printf("Before:\n");
+    // printFileContent(fileName);
+    // printf("\n\n");
+
+    sortFile(fileName);
+
+    // printf("After:\n");
+    // printFileContent(fileName);
+    // printf("\n");
+    printFileContent(fileName);
     return 0;
 }

@@ -5,7 +5,7 @@
 
 void fillIncreasingNums(int *arr, const size_t size, const int left = -100, const int right = 100)
 {
-    for (int i = 0; i < size; i++)
+    for (size_t i = 0; i < size; i++)
     {
         arr[i] = rand() % (right - left + 1) + left;
     }
@@ -15,7 +15,7 @@ void fillIncreasingNums(int *arr, const size_t size, const int left = -100, cons
 void printArray(const int *arr, const size_t size)
 {
     printf("[");
-    for (int i = 0; i < size - 1; i++)
+    for (size_t i = 0; i < size - 1; i++)
     {
         printf("%d, ", arr[i]);
     }
@@ -24,16 +24,16 @@ void printArray(const int *arr, const size_t size)
 
 int binarySearch(const int *arr, const size_t size, const int key)
 {
-    unsigned int left = 0;
-    unsigned int right = size - 1;
+    size_t left = 0;
+    size_t right = size - 1;
     while (left <= right)
     {
-        int index = (left + right) / 2;
+        size_t index = (left + right) / 2;
 
         if (arr[index] < key)
-            left++;
+            left = index + 1;
         else if (arr[index] > key)
-            right--;
+            right = index - 1;
         else
             return index;
     }
@@ -44,7 +44,7 @@ int main()
 {
     srand(time(0));
 
-    int n;
+    size_t n;
     printf("Input n: ");
     scanf("%d", &n);
     int *arr = (int *) malloc(sizeof(int) * n);

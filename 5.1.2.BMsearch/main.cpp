@@ -57,6 +57,9 @@ int main()
     if (pos < 0)
         printf("Not found.\n");
     else
+    {
         show(str, substr, pos);
+        printf("\n%d\n", pos);
+    }
     return 0;
 }
